@@ -1,0 +1,312 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#ifdef _WIN32
+#include <windows.h>
+#else
+#include <unistd.h>
+#endif
+#include <stdio.h>
+#include <string.h>
+#define MAX_COURSES 50
+#define MAX_STUDENTS 10
+#define MAX_COURSE_CODE 10
+#define MAX_COURSE_NAME 50
+#define MAX_STUDENT_ID 10
+#define MAX_PASSWORD 10
+#define MAX_STREAM 2
+#define MAX_CAREER_SCOPE 100
+#define MAX_SALARY 20
+
+
+void delay(int ms) {
+#ifdef _WIN32
+    Sleep(ms);
+#else
+    usleep(ms * 1000);
+#endif
+}
+
+// TYPEWRITER WITHOUT SOUND
+void typewriter(const char *text, int speed) {
+    while (*text) {
+        printf("%c", *text);
+        fflush(stdout);
+        delay(speed);
+        text++;
+    }
+}
+
+void frontScreen() {
+
+    system(
+#ifdef _WIN32
+        "cls"
+#else
+        "clear"
+#endif
+    );
+
+    typewriter("\n=============================================\n", 15);
+    typewriter("          COURSE REGISTRATION\n", 15);
+    typewriter("             MANAGEMENT SYSTEM\n", 15);
+    typewriter("=============================================\n\n", 15);
+
+    // CRMS LOGO (NO SOUND)
+    // LARGE CRMS LOGO
+    typewriter("   ██████╗██████╗ ███╗   ███╗███████╗\n", 2);
+    typewriter("  ██╔════╝██╔══██╗████╗ ████║██╔════╝\n", 2);
+    typewriter("  ██║     ██████╔╝██╔████╔██║█████╗  \n", 2);
+    typewriter("  ██║     ██╔══██╗██║╚██╔╝██║██╔══╝  \n", 2);
+    typewriter("  ╚██████╗██║  ██║██║ ╚═╝ ██║███████╗\n", 2);
+    typewriter("   ╚═════╝╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝\n\n", 2);
+    typewriter("                C  R  M  S\n\n", 3);
+
+    // WELCOME LOGO
+    typewriter("██╗    ██╗███████╗███╗   ███╗ ██████╗ ██████╗ ███╗   ███╗███████╗\n", 3);
+    typewriter("██║    ██║██╔════╝████╗ ████║██╔════╝██╔═══██╗████╗ ████║██╔════╝\n", 3);
+    typewriter("██║ █╗ ██║█████╗  ██╔████╔██║██║     ██║   ██║██╔████╔██║█████╗  \n", 3);
+    typewriter("██║███╗██║██╔══╝  ██║╚██╔╝██║██║     ██║   ██║██║╚██╔╝██║██╔══╝  \n", 3);
+    typewriter("╚███╔███╔╝███████╗██║ ╚═╝ ██║╚██████╗╚██████╔╝██║ ╚═╝ ██║███████╗\n", 3);
+    typewriter(" ╚══╝╚══╝ ╚══════╝╚═╝     ╚═╝ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚══════╝\n\n", 3);
+    typewriter("                           WELCOME\n\n", 3);
+
+    typewriter("DEVELOPED BY:\n", 20);
+    typewriter("  • Team Member 1\n", 10);
+    typewriter("  • Team Member 2\n", 10);
+    typewriter("  • Team Member 3\n", 10);
+    typewriter("  • Team Member 4\n\n", 10);
+
+    typewriter("Loading", 200);
+    for (int i = 0; i < 5; i++) {
+        typewriter(".", 200);
+    }
+    printf("\n");
+}
+
+
+#include <stdio.h>
+#include <string.h>
+#define MAX_COURSES 50
+#define MAX_STUDENTS 10
+#define MAX_COURSE_CODE 10
+#define MAX_COURSE_NAME 50
+#define MAX_STUDENT_ID 10
+#define MAX_PASSWORD 10
+#define MAX_STREAM 2
+#define MAX_CAREER_SCOPE 100
+#define MAX_SALARY 20
+
+typedef struct {
+    char courseCode[MAX_COURSE_CODE];
+    char courseName[MAX_COURSE_NAME];
+    int credits;
+    char prerequisites[MAX_COURSE_CODE];
+    char careerScope[MAX_CAREER_SCOPE];
+    char salary[MAX_SALARY];
+    char jobRoles[MAX_CAREER_SCOPE];
+} Course;
+
+typedef struct {
+    char studentID[MAX_STUDENT_ID];
+    char password[MAX_PASSWORD];
+    Course registeredCourses[MAX_COURSES];
+    int courseCount;
+} Student;
+
+typedef struct {
+    char streamName[20];
+    Course courses[MAX_COURSES];
+} Stream;
+
+Stream streams[MAX_STREAM] = {
+    {"Science", {
+        {"CS101", "Introduction to Programming", 3, "None", "Software Developer, Data Analyst, IT Consultant", "3-5 LPA", "Software Developer, Data Analyst, IT Consultant"},
+        {"CS202", "Data Structures and Algorithms", 4, "CS101", "Software Engineer, Data Scientist, Research Analyst", "5-8 LPA", "Software Engineer, Data Scientist, Research Analyst"},
+        {"MATH101", "Calculus I", 4, "None", "Mathematician, Data Analyst, Research Scientist", "4-6 LPA", "Mathematician, Data Analyst, Research Scientist"},
+        {"BIO101", "Introduction to Biology", 4, "None", "Biologist, Research Scientist, Environmental Consultant", "3-5 LPA", "Biologist, Research Scientist, Environmental Consultant"},
+        {"CS303", "Computer Networks", 4, "CS202", "Network Administrator, Cybersecurity Specialist, IT Consultant", "5-8 LPA", "Network Administrator, Cybersecurity Specialist, IT Consultant"},
+        {"PHY101", "Introduction to Mechanics", 3, "None", "Physicist, Research Scientist, Engineer", "4-6 LPA", "Physicist, Research Scientist, Engineer"},
+        {"CHEM102", "Organic Chemistry", 4, "None", "Chemist, Research Scientist, Pharmaceutical Scientist", "4-6 LPA", "Chemist, Research Scientist, Pharmaceutical Scientist"},
+        {"BIO202", "Genetics and Evolution", 4, "BIO101", "Geneticist, Research Scientist, Biologist", "5-8 LPA", "Geneticist, Research Scientist, Biologist"},
+        {"MATH203", "Linear Algebra", 3, "MATH101", "Mathematician, Data Analyst, Research Scientist", "4-6 LPA", "Mathematician, Data Analyst, Research Scientist"},
+        {"CS204", "Data Structures and Algorithms", 4, "CS101", "Software Engineer, Data Scientist, Research Analyst", "5-8 LPA", "Software Engineer, Data Scientist, Research Analyst"},
+        {"AST305", "Introduction to Astronomy", 3, "None", "Astronomer, Research Scientist, Astrophysicist", "4-6 LPA", "Astronomer, Research Scientist, Astrophysicist"},
+        {"BCH306", "Biomolecules and Metabolism", 4, "BIO101", "Biochemist, Research Scientist, Pharmaceutical Scientist", "4-6 LPA", "Biochemist, Research Scientist, Pharmaceutical Scientist"},
+        {"CNT307", "Network Protocols and Architecture", 4, "CS202", "Network Administrator, Cybersecurity Specialist, IT Consultant", "5-8 LPA", "Network Administrator, Cybersecurity Specialist, IT Consultant"},
+        {"DSC308", "Data Analysis and Visualization", 3, "MATH101", "Data Analyst, Data Scientist, Business Analyst", "4-6 LPA", "Data Analyst, Data Scientist, Business Analyst"},
+        {"ENV309", "Water and Air Quality Management", 3, "None", "Environmental Consultant, Research Scientist, Sustainability Specialist", "3-5 LPA", "Environmental Consultant, Research Scientist, Sustainability Specialist"},
+        {"GEN310", "Molecular Genetics", 4, "BIO202", "Geneticist, Research Scientist, Biologist", "5-8 LPA", "Geneticist, Research Scientist, Biologist"},
+        {"MCL311", "Machine Learning Algorithms", 4, "CS204", "Machine Learning Engineer, Data Scientist, AI Researcher", "8-12 LPA", "Machine Learning Engineer, Data Scientist, AI Researcher"},
+        {"MSC312", "Materials Properties and Applications", 3, "PHY101", "Materials Scientist, Research Scientist, Engineer", "4-6 LPA", "Materials Scientist, Research Scientist, Engineer"},
+        {"MATH313", "Differential Equations", 3, "MATH203", "Mathematician, Data Analyst, Research Scientist", "4-6 LPA", "Mathematician, Data Analyst, Research Scientist"},
+        {"NSC314", "Introduction to Neuroscience", 3, "BIO202", "Neuroscientist, Research Scientist, Biologist", "4-6 LPA", "Neuroscientist, Research Scientist, Biologist"},
+        {"PHY315", "Electromagnetism", 4, "PHY101", "Physicist, Research Scientist, Engineer", "4-6 LPA", "Physicist, Research Scientist, Engineer"},
+        {"STAT316", "Statistical Inference", 3, "MATH313", "Statistician, Data Analyst, Research Scientist", "4-6 LPA", "Statistician, Data Analyst, Research Scientist"},
+        {"WBD317", "Web Design and Development", 3, "CS101", "Web Developer, UI/UX Designer, Digital Marketing Specialist", "3-5 LPA", "Web Developer, UI/UX Designer, Digital Marketing Specialist"}
+    }},
+    {"Arts", {
+        {"MGT101", "Principles of Management", 3, "None", "Business Manager, Operations Manager, Management Consultant", "4-6 LPA", "Business Manager, Operations Manager, Management Consultant"},
+        {"ACC201", "Financial Accounting", 3, "None", "Accountant, Financial Analyst, Auditor", "3-5 LPA", "Accountant, Financial Analyst, Auditor"},
+        {"MKT301", "Marketing Management", 3, "MGT101", "Marketing Manager, Brand Manager, Digital Marketing Specialist", "4-6 LPA", "Marketing Manager, Brand Manager, Digital Marketing Specialist"},
+        {"HRM401", "Human Resource Management", 3, "MGT101", "HR Manager, Talent Acquisition Specialist, Recruitment Consultant", "4-6 LPA", "HR Manager, Talent Acquisition Specialist, Recruitment Consultant"},
+        {"OPM501", "Operations Management", 3, "MGT101", "Operations Manager, Supply Chain Manager, Logistics Coordinator", "4-6 LPA", "Operations Manager, Supply Chain Manager, Logistics Coordinator"},
+        {"ENG101", "Introduction to Literature", 3, "None", "Writer, Editor, Content Specialist", "2-4 LPA", "Writer, Editor, Content Specialist"},
+        {"HIS102", "World", 3, "None", "Historian, Researcher, Teacher", "2-4 LPA", "Historian, Researcher, Teacher"},
+        {"PHI103", "Ethics and Morality", 3, "None", "Philosopher, Researcher, Writer", "2-4 LPA", "Philosopher, Researcher, Writer"},
+        {"PSY201", "Introduction to Psychology", 3, "None", "Psychologist, Researcher, Counselor", "3-5 LPA", "Psychologist, Researcher, Counselor"},
+        {"SOC202", "Social Structures and Institutions", 3, "None", "Sociologist, Researcher, Policy Analyst", "3-5 LPA", "Sociologist, Researcher, Policy Analyst"},
+        {"ANT306", "Cultural Anthropology", 3, "None", "Anthropologist, Researcher, Cultural Consultant", "3-5 LPA", "Anthropologist, Researcher, Cultural Consultant"},
+        {"BLW307", "Business Law and Ethics", 3, "MGT101", "Lawyer, Business Consultant, Compliance Officer", "4-6 LPA", "Lawyer, Business Consultant, Compliance Officer"},
+        {"COM308", "Communication Theory and Practice", 3, "None", "Communication Specialist, PR Manager, Content Writer", "3-5 LPA", "Communication Specialist, PR Manager, Content Writer"},
+        {"CRW309", "Creative Writing Workshop", 3, "ENG101", "Writer, Editor, Content Specialist", "2-4 LPA", "Writer, Editor, Content Specialist"},
+        {"ECO310", "Macroeconomics", 3, "None", "Economist, Researcher, Policy Analyst", "4-6 LPA", "Economist, Researcher, Policy Analyst"},
+        {"ENG311", "English Literature", 3, "ENG101", "Writer, Editor, Content Specialist", "2-4 LPA", "Writer, Editor, Content Specialist"},
+        {"FIN312", "Introduction to Fine Arts", 3, "None", "Artist, Designer, Art Director", "2-4 LPA", "Artist, Designer, Art Director"},
+    }}
+};
+
+
+Student students[MAX_STUDENTS];
+
+void displayStreams() {
+    printf("\t\t##############---AVAILABLE STREAMS---##############:\n\n");
+    for (int i = 0; i < MAX_STREAM; i++) {
+        printf("\t\t\t\tPRESS %d.  FOR %s\n", i+1, streams[i].streamName);
+    }
+}
+
+void displayCourses(int streamIndex) {
+    printf("\n--------------------Available Courses in %s:--------------------\n\n", streams[streamIndex].streamName);
+    for (int i = 0; i < MAX_COURSES; i++) {
+        if (strcmp(streams[streamIndex].courses[i].courseCode, "") != 0) {
+            printf("%s - %s (%d credits)\n", streams[streamIndex].courses[i].courseCode, streams[streamIndex].courses[i].courseName, streams[streamIndex].courses[i].credits);
+            printf("CAREER SCOPE: %s\n", streams[streamIndex].courses[i].careerScope);
+            printf("SALARY: %s\n", streams[streamIndex].courses[i].salary);
+            printf("JOB ROLES: %s\n", streams[streamIndex].courses[i].jobRoles);
+            printf("\n");
+        }
+    }
+}
+
+void registerCourse(Student* student, char* courseCode, int streamIndex) {
+    for (int i = 0; i < MAX_COURSES; i++) {
+        if (strcmp(streams[streamIndex].courses[i].courseCode, courseCode) == 0) {
+            student->registeredCourses[student->courseCount] = streams[streamIndex].courses[i];
+            student->courseCount++;
+            printf("Course registered successfully!\n\n");
+            return;
+        }
+    }
+    printf("Course not found!\n\n");
+}
+
+void displayRegisteredCourses(Student* student) {
+    printf("Registered Courses:\n");
+    for (int i = 0; i < student->courseCount; i++) {
+        printf("%s - %s (%d credits)\n", student->registeredCourses[i].courseCode, student->registeredCourses[i].courseName, student->registeredCourses[i].credits);
+        printf("CAREER SCOPE: %s\n", student->registeredCourses[i].careerScope);
+        printf("SALARY: %s\n", student->registeredCourses[i].salary);
+        printf("JOB ROLES: %s\n", student->registeredCourses[i].jobRoles);
+        printf("\n");
+    }
+}
+
+int main() {
+    
+    
+    frontScreen();
+    int choice;
+    char studentID[MAX_STUDENT_ID];
+    char password[MAX_PASSWORD];
+    Student* currentStudent = NULL;
+    int streamIndex = -1;
+
+    printf("===========Welcome to the Course Registration Management System!============\n");
+    for (int i = 0; i < MAX_STUDENTS; i++) {
+        students[i].courseCount = 0;
+    }
+
+    while (1) {
+        printf("\t\t--------------------MAIN MENU (FIRST) --------------------\n\n");
+        printf("\t\t\t\tPRESS 1.  TO SIGN IN USER\n");
+        printf("\t\t\t\tPRESS 2.  TO REGISTER NEW USER\n");
+        printf("\t\t\t\tPRESS 3.  TO EXIT MAIN MENU\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                printf("Enter student ID: ");
+                scanf("%s", studentID);
+                printf("Enter password: ");
+                scanf("%s", password);
+                for (int i = 0; i < MAX_STUDENTS; i++) {
+                    if (strcmp(students[i].studentID, studentID) == 0 && strcmp(students[i].password, password) == 0) {
+                        currentStudent = &students[i];
+                        break;
+                    }
+                }
+                if (currentStudent != NULL) {
+                    printf("Login successful!\n\n");
+                    displayStreams();
+                    printf("Enter stream number: ");
+                    scanf("%d", &streamIndex);
+                    streamIndex--;
+                    while (1) {
+                        printf("\t\t--------------------MAIN MENU (SECOND)--------------------\n\n");
+                        printf("\t\t\t\tPRESS 1. TO DISPLAY COURSES\n");
+                        printf("\t\t\t\tPRESS 2. TO REGISTER COURSE\n");
+                        printf("\t\t\t\tPRESS 3. TO DISPLAY REGISTERED COURSES\n");
+                        printf("\t\t\t\tPRESS 4. TO LOGOUT\n\n");
+                        printf("Enter your choice: ");
+                        scanf("%d", &choice);
+                        switch (choice) {
+                            case 1:
+                                displayCourses(streamIndex);
+                                break;
+                            case 2:
+                                printf("Enter course code: ");
+                                char courseCode[MAX_COURSE_CODE];
+                                scanf("%s", courseCode);
+                                registerCourse(currentStudent, courseCode, streamIndex);
+                                break;case 3:
+                                displayRegisteredCourses(currentStudent);
+                                break;
+                            case 4:
+                                currentStudent = NULL;
+                                break;
+                            default:
+                                printf("Invalid choice!\n\n");
+                        }
+                        if (currentStudent == NULL) {
+                            break;
+                        }
+                    }
+                } else {
+                    printf("Invalid student ID or password!\n\n");
+                }
+                break;
+            case 2:
+                printf("Enter student ID: ");
+                scanf("%s", studentID);
+                printf("Enter password: ");
+                scanf("%s", password);
+                for (int i = 0; i < MAX_STUDENTS; i++) {
+                    if (strcmp(students[i].studentID, "") == 0) {
+                        strcpy(students[i].studentID, studentID);
+                        strcpy(students[i].password, password);
+                        students[i].courseCount = 0;
+                        printf("Registration successful!\n\n");
+                        break;
+                    }
+                }
+                break;
+            case 3:
+                return 0;
+            default:
+                printf("Invalid choice!\n\n");
+        }
+    }
+    return 0;
+}
